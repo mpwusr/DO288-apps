@@ -19,7 +19,7 @@ public class ServerHostEndPoint {
     catch (Exception e) {
        e.printStackTrace();
     }
-    String msg = "Blue App running on server "+host+" Version 1.0 \n";
+    String msg = "Orange App running on server "+host+" Version 1.0 \n";
     return Response.ok(msg).build();
   }
 }
