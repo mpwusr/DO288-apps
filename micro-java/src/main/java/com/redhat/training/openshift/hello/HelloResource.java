@@ -5,6 +5,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.net.URL;
+import java.net.MalformedURLException;
 
 @Path("/")
 public class HelloResource {
@@ -43,18 +44,22 @@ public class HelloResource {
     }
     @GET
     @Path("/geturi")
+    
     @Produces("text/plain")
-    public String geturi() {
-        URL url = new URL("https://test.domain.com/a/b/c.html?test=hello"); 
-               String protocol = url.getProtocol(); 
-               String host = url.getHost(); 
-               int port = url.getPort();  
-       // if the port is not explicitly specified in the input, it will be -1. 
-       if (port == -1) {     
-          response = "Hostname is " + String.format("%s://%s", protocol, host);
-       } else {     
-          response = "Hostname is " + String.format("%s://%s:%d", protocol, host, port);
-       }
+    public String geturi() 
+    {   
+        String response = "";
+        try
+        {
+             URL url = new URL("https://test.domain.com/a/b/c.html?test=hello");
+             String protocol = url.getProtocol();
+             String host = url.getAuthority();
+             response = "URL is " + String.format("%s://%s", protocol, authority)+"\n";
+        }
+        catch (MalformedURLException e)
+        {
+           e.printStackTrace();
+        } 
        return response;
     }
 }
