@@ -24,4 +24,20 @@ public class HelloResource {
         }
         return response;
     }
+    @GET
+    @Path("/goodbye")
+    @Produces("text/plain")
+    public String hello() {
+        String hostname = System.getenv().getOrDefault("HOSTNAME", "unknown");
+              String message = System.getenv().getOrDefault("APP_MSG", null);
+              String response = "";
+
+        if (message == null) {
+          response = "Goodbye from host "+hostname+"\n";
+        } else {
+          response = "Goodbye from host ["+hostname+"].\n";
+          response += "Message received = "+message+"\n";
+        }
+        return response;
+    }
 }
