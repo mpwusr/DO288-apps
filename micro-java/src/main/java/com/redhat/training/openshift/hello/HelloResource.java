@@ -40,4 +40,19 @@ public class HelloResource {
         }
         return response;
     }
-}
+    @GET
+    @Path("/geturi")
+    @Produces("text/plain")
+    public String geturi() {
+        URL url = new URL("https://test.domain.com/a/b/c.html?test=hello"); 
+               String protocol = url.getProtocol(); 
+               String host = url.getHost(); 
+               int port = url.getPort();  
+       // if the port is not explicitly specified in the input, it will be -1. 
+       if (port == -1) {     
+          response = "Hostname is " + String.format("%s://%s", protocol, host);
+       } else {     
+          response = "Hostname is " + String.format("%s://%s:%d", protocol, host, port);
+       }
+       return response;
+    }
