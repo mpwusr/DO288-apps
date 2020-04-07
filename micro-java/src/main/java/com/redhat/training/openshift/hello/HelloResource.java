@@ -27,7 +27,7 @@ public class HelloResource {
     @GET
     @Path("/goodbye")
     @Produces("text/plain")
-    public String hello() {
+    public String goodbye() {
         String hostname = System.getenv().getOrDefault("HOSTNAME", "unknown");
               String message = System.getenv().getOrDefault("APP_MSG", null);
               String response = "";
