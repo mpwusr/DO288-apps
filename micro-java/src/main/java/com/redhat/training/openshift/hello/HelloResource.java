@@ -60,11 +60,11 @@ public class HelloResource {
     @GET
     @Path("/geturi/{urlURI}")
     @Produces("text/plain")
-    public Response GetUriService(@PathParam("urlURI") String urlURI) {
-        System.out.println("TESTING - HTTP GET");
+    public Response GetUriService(@PathParam("urlURI") String urlURI) throws Exception {
+        System.out.println("TESTING - HTTP GET URI SERVICE");
         HttpClientExample obj = new HttpClientExample();
         try {
-           System.out.println("Testing 1 - Send Http GET request");
+           System.out.println("Testing Case 1 - Send Http GET request");
            obj.sendGet();
         } finally {
            obj.close();
