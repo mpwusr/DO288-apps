@@ -122,7 +122,7 @@ public class HelloResource {
                 System.out.println(result);             
             } 
         }
-      return "STATUS: \n" + status + "\n" + "HEADERS: \n" + RESULT: "\n" + result;
+      return "STATUS: \n" + status + "\n" + "HEADERS: \n" + headers + "RESULT: \n" + result;
     }
   }
 }
