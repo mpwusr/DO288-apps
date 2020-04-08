@@ -60,7 +60,7 @@ public class HelloResource {
     @GET
     @Path("/geturi/{urlURI}/{method}/{ssl}/{search}")
     @Produces("text/html")
-    public Response GetPostUriService(@PathParam("urlURI") String urlURI, @PathParam("method") String method,                            @PathParam("ssl") String ssl) throws Exception {
+    public Response GetPostUriService(@PathParam("urlURI") String urlURI, @PathParam("method") String method,                            @PathParam("ssl") String ssl, @PathParam String search) throws Exception {
         String hostname = System.getenv().getOrDefault("HOSTNAME", "unknown");
               String message = System.getenv().getOrDefault("APP_MSG", null);
               String greeting = "";
