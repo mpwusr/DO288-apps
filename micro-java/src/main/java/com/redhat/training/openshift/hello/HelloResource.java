@@ -58,15 +58,19 @@ public class HelloResource {
         return response;
     }
     @GET
-    @Path("/geturi/{urlURI}")
+    @Path("/geturi/{urlURI}/{method}/{ssl}")
     @Produces("text/html")
-    public Response GetUriService(@PathParam("urlURI") String urlURI) throws Exception {
+    public Response GetUriService(@PathParam("urlURI") String urlURI, @PathParam("method") String method,                            @PathParam("ssl") String ssl) throws Exception {
         System.out.println("TESTING - HTTP GET URI SERVICE");
         HttpClientExample obj = new HttpClientExample();
         String msg = "";
         try {
            System.out.println("Testing Case 1 - Send Http GET request");
-           msg = obj.sendGet(urlURI);
+           if (method == "GET") {
+               msg = obj.sendGet(urlURI, ssl);
+           } else {
+               msg = obj.sendGet(urlURI, ssl);
+           }
         } finally {
            obj.close();
         }
@@ -81,8 +85,14 @@ public class HelloResource {
         httpClient.close();     
     } 
 
-    private String sendGet(String URL) throws Exception {          
-        HttpGet request = new HttpGet("https://" + URL + "/search?q=mkyong");          
+    private String sendGet(String URL, String ssl) throws Exception {   
+        String protocol = "";
+        if (ssl == "Y") {
+            protocol = "https://";
+        } else {
+            protocol = "http://";
+        }      
+        HttpGet request = new HttpGet(protocol + URL + "/search?q=mkyong");          
         
         // add request headers         
         request.addHeader("custom-key", "mkyong");         
