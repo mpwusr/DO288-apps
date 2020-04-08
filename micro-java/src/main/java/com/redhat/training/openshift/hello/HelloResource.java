@@ -86,9 +86,10 @@ public class HelloResource {
            // return it as a String                 
            String result = EntityUtils.toString(entity);                 
            System.out.println(result);             
-        } finally {
-          httpClient.close();
-       }
+        } 
       }
-    }          
+        finally {
+          httpClient.close();
+      }
+    }
 }
