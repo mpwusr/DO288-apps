@@ -29,8 +29,7 @@ public class HelloResource {
     @Path("/hello")
     @Produces("text/plain")
     public String hello() {
-        String hostname = System.getenv().getOrDefault("HOSTNAME", "unknown");
-	      String message = System.getenv().getOrDefault("APP_MSG", null);
+
 	      String response = "";
 
       	if (message == null) {
@@ -42,6 +41,7 @@ public class HelloResource {
         return response;
     }
     @GET
+
     @Path("/goodbye")
     @Produces("text/plain")
     public String goodbye() {
@@ -61,6 +61,16 @@ public class HelloResource {
     @Path("/geturi/{urlURI}/{method}/{ssl}")
     @Produces("text/html")
     public Response GetUriService(@PathParam("urlURI") String urlURI, @PathParam("method") String method,                            @PathParam("ssl") String ssl) throws Exception {
+        String hostname = System.getenv().getOrDefault("HOSTNAME", "unknown");
+              String message = System.getenv().getOrDefault("APP_MSG", null);
+              String greeting = "";
+
+        if (message == null) {
+          greeting = "Hello from host "+hostname+"\n";
+        } else {
+          greeting = "Hello from host ["+hostname+"].\n";
+          greeting += "Message received = "+message+"\n";
+        } 
         System.out.println("TESTING - HTTP GET URI SERVICE");
         HttpClientExample obj = new HttpClientExample();
         String msg = "";
@@ -74,7 +84,7 @@ public class HelloResource {
         } finally {
            obj.close();
         }
-        return Response.status(200).entity("getUrlUri is called, URL : " + urlURI + "\n" + "\n" + msg).build();
+        return Response.status(200).entity(greeting + "\n" + " URL : " + urlURI + "\n" + "\n" + msg).build();
     }
 
    private static class HttpClientExample {      
@@ -98,10 +108,11 @@ public class HelloResource {
         request.addHeader("custom-key", "mkyong");         
         request.addHeader(HttpHeaders.USER_AGENT, "Googlebot");
         String result = "";  
+        String status = "";
         try (CloseableHttpResponse response = httpClient.execute(request)) {              
             // Get HttpResponse Status             
             System.out.println(response.getStatusLine().toString());              
-            
+            status = response.getStatusLine().toString();
             HttpEntity entity = response.getEntity();             
             Header headers = entity.getContentType();             
             System.out.println(headers);              
@@ -111,7 +122,7 @@ public class HelloResource {
                 System.out.println(result);             
             } 
         }
-      return result;
+      return "STATUS: \n" + status + "\n" + "HEADERS: \n" + RESULT: \n" + result;
     }
   }
 }
