@@ -56,6 +56,14 @@
       <artifactId>jaxrs</artifactId>
     </dependency>
   </dependencies>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.2</version>
+    </dependency>
+  </dependencies> 
 
   <build>
     <!-- Maven will append the version to the finalName (which is the name
