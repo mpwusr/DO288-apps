@@ -4,8 +4,23 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
 import java.net.URL;
 import java.net.MalformedURLException;
+import org.apache.http.Header; 
+import org.apache.http.HttpEntity; 
+import org.apache.http.HttpHeaders; 
+import org.apache.http.NameValuePair; 
+import org.apache.http.client.entity.UrlEncodedFormEntity; 
+import org.apache.http.client.methods.CloseableHttpResponse; 
+import org.apache.http.client.methods.HttpGet; 
+import org.apache.http.client.methods.HttpPost; 
+import org.apache.http.impl.client.CloseableHttpClient; 
+import org.apache.http.impl.client.HttpClients; 
+import org.apache.http.message.BasicNameValuePair; 
+import org.apache.http.util.EntityUtils;  
+import java.io.IOException;
 
 @Path("/")
 public class HelloResource {
@@ -43,23 +58,40 @@ public class HelloResource {
         return response;
     }
     @GET
-    @Path("/geturi")
-    
+    @Path("/geturi/{urlURI}")
     @Produces("text/plain")
-    public String geturi() 
-    {   
-        String response = "";
-        try
-        {
-             URL url = new URL("https://test.domain.com/a/b/c.html?test=hello");
-             String protocol = url.getProtocol();
-             String host = url.getAuthority();
-             response = "URL is " + String.format("%s://%s", protocol, authority)+"\n";
+    public Response GetUriService(@PathParam("urlURI") String urlURI){
+        try {
+            System.out.println("TESTING - HTTP GET");
+            httpsendGet();
+        } finally {
+            httpclose();
         }
-        catch (MalformedURLException e)
-        {
-           e.printStackTrace();
-        } 
-       return response;
+        return Response.status(200).entity("getUrlUri is called, URL : " + urlURI + "\n").build();
     }
+
+    private void httpclose() throws IOException {
+        httpClient.close();
+    }
+
+    private void httpsendGet() throws Exception {          
+        HttpGet request = new HttpGet("https://www.google.com/search?q=mkyong");          
+        
+        // add request headers         
+        request.addHeader("custom-key", "mkyong");         
+        request.addHeader(HttpHeaders.USER_AGENT, "Googlebot");          
+        try (CloseableHttpResponse response = httpClient.execute(request)) {              
+            // Get HttpResponse Status             
+            System.out.println(response.getStatusLine().toString());              
+            HttpEntity entity = response.getEntity();             
+            Header headers = entity.getContentType();             
+            System.out.println(headers);              
+        
+        if (entity != null) {                 
+           // return it as a String                 
+           String result = EntityUtils.toString(entity);                 
+           System.out.println(result);             
+        }
+      }
+    }          
 }
