@@ -64,17 +64,12 @@ public class HelloResource {
         try {
             System.out.println("TESTING - HTTP GET");
             httpsendGet();
-        } finally {
-            httpclose();
-        }
+        } 
         return Response.status(200).entity("getUrlUri is called, URL : " + urlURI + "\n").build();
     }
 
-    private void httpclose() throws IOException {
-        httpClient.close();
-    }
-
     private void httpsendGet() throws Exception {          
+        private final CloseableHttClient httpClient = HttpClients.createDefault();
         HttpGet request = new HttpGet("https://www.google.com/search?q=mkyong");          
         
         // add request headers         
@@ -91,7 +86,9 @@ public class HelloResource {
            // return it as a String                 
            String result = EntityUtils.toString(entity);                 
            System.out.println(result);             
-        }
+        } finally {
+          httpClient.close();
+       }
       }
     }          
 }
