@@ -66,11 +66,11 @@ public class HelloResource {
         String msg = "";
         try {
            System.out.println("Testing Case 1 - Send Http GET request");
-           msg = obj.sendGet();
+           msg = obj.sendGet(urlURI);
         } finally {
            obj.close();
         }
-        return Response.status(200).entity("getUrlUri is called, URL : " + urlURI + "\n" + msg).build();
+        return Response.status(200).entity("getUrlUri is called, URL : " + urlURI + "\n" + "\n" + msg).build();
     }
 
    private static class HttpClientExample {      
@@ -81,8 +81,8 @@ public class HelloResource {
         httpClient.close();     
     } 
 
-    private String sendGet() throws Exception {          
-        HttpGet request = new HttpGet("https://www.google.com/search?q=mkyong");          
+    private String sendGet(String URL) throws Exception {          
+        HttpGet request = new HttpGet("https://" + URL + "/search?q=mkyong");          
         
         // add request headers         
         request.addHeader("custom-key", "mkyong");         
