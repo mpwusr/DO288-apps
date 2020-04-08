@@ -58,9 +58,9 @@ public class HelloResource {
         return response;
     }
     @GET
-    @Path("/geturi/{urlURI}/{method}/{ssl}")
+    @Path("/geturi/{urlURI}/{method}/{ssl}/{search}")
     @Produces("text/html")
-    public Response GetUriService(@PathParam("urlURI") String urlURI, @PathParam("method") String method,                            @PathParam("ssl") String ssl) throws Exception {
+    public Response GetPostUriService(@PathParam("urlURI") String urlURI, @PathParam("method") String method,                            @PathParam("ssl") String ssl) throws Exception {
         String hostname = System.getenv().getOrDefault("HOSTNAME", "unknown");
               String message = System.getenv().getOrDefault("APP_MSG", null);
               String greeting = "";
@@ -77,9 +77,9 @@ public class HelloResource {
         try {
            System.out.println("Testing Case 1 - Send Http GET request");
            if (method == "GET") {
-               msg = obj.sendGet(urlURI, ssl);
+               msg = obj.sendGet(urlURI, ssl, search);
            } else {
-               msg = obj.sendGet(urlURI, ssl);
+               msg = obj.sendGet(urlURI, ssl, search);
            }
         } finally {
            obj.close();
@@ -95,17 +95,17 @@ public class HelloResource {
         httpClient.close();     
     } 
 
-    private String sendGet(String URL, String ssl) throws Exception {   
+    private String sendGet(String URL, String ssl, String search) throws Exception {   
         String protocol = "";
         if (ssl == "Y") {
             protocol = "https://";
         } else {
             protocol = "http://";
         }      
-        HttpGet request = new HttpGet(protocol + URL + "/search?q=mkyong");          
+        HttpGet request = new HttpGet(protocol + URL + "/search?q=" + search);          
         
         // add request headers         
-        request.addHeader("custom-key", "mkyong");         
+        request.addHeader("custom-key", search);         
         request.addHeader(HttpHeaders.USER_AGENT, "Googlebot");
         String result = "";  
         String status = "";
