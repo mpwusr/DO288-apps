@@ -60,11 +60,15 @@ public class HelloResource {
     @GET
     @Path("/geturi/{urlURI}")
     @Produces("text/plain")
-    public Response GetUriService(@PathParam("urlURI") String urlURI){
+    public Response GetUriService(@PathParam("urlURI") String urlURI) throws exception {
         System.out.println("TESTING - HTTP GET");
-        // httpsendGet();
         HttpClientExample obj = new HttpClientExample();
-        obj.close();
+        try {
+           System.out.println("Testing 1 - Send Http GET request");
+           obj.sendPost();
+        } finally {
+           obj.close();
+        }
         return Response.status(200).entity("getUrlUri is called, URL : " + urlURI + "\n").build();
     }
 
@@ -72,19 +76,6 @@ public class HelloResource {
        // one instance, reuse     
        private final CloseableHttpClient httpClient = HttpClients.createDefault();      
 
-       // public static void main(String[] args) throws Exception {          
-         
-          // HttpClientExample obj = new HttpClientExample();          
-          // try {             
-          //    System.out.println("Testing 1 - Send Http GET request");             
-          //    obj.sendGet();              
-              // System.out.println("Testing 2 - Send Http POST request");             
-              // obj.sendPost();         
-          //} finally {             
-          //    obj.close();         
-          //}     
-    //}
-   
     private void close() throws IOException {         
         httpClient.close();     
     } 
