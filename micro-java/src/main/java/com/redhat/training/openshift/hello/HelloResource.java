@@ -61,10 +61,8 @@ public class HelloResource {
     @Path("/geturi/{urlURI}")
     @Produces("text/plain")
     public Response GetUriService(@PathParam("urlURI") String urlURI){
-        try {
-            System.out.println("TESTING - HTTP GET");
-            httpsendGet();
-        } 
+        System.out.println("TESTING - HTTP GET");
+        httpsendGet();
         return Response.status(200).entity("getUrlUri is called, URL : " + urlURI + "\n").build();
     }
 
