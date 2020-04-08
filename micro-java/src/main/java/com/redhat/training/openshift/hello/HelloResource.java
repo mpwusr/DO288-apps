@@ -63,13 +63,14 @@ public class HelloResource {
     public Response GetUriService(@PathParam("urlURI") String urlURI) throws Exception {
         System.out.println("TESTING - HTTP GET URI SERVICE");
         HttpClientExample obj = new HttpClientExample();
+        String msg = "";
         try {
            System.out.println("Testing Case 1 - Send Http GET request");
-           obj.sendGet();
+           msg = obj.sendGet();
         } finally {
            obj.close();
         }
-        return Response.status(200).entity("getUrlUri is called, URL : " + urlURI + "\n").build();
+        return Response.status(200).entity("getUrlUri is called, URL : " + urlURI + msg + "\n").build();
     }
 
    private static class HttpClientExample {      
@@ -80,7 +81,7 @@ public class HelloResource {
         httpClient.close();     
     } 
 
-    private void sendGet() throws Exception {          
+    private String sendGet() throws Exception {          
         HttpGet request = new HttpGet("https://www.google.com/search?q=mkyong");          
         
         // add request headers         
@@ -94,13 +95,14 @@ public class HelloResource {
             HttpEntity entity = response.getEntity();             
             Header headers = entity.getContentType();             
             System.out.println(headers);              
-        
+            String result = "";
             if (entity != null) {                 
                 // return it as a String                 
-                String result = EntityUtils.toString(entity);                 
+                result = EntityUtils.toString(entity);                 
                 System.out.println(result);             
             } 
         }
+      return result;
     }
   }
 }
