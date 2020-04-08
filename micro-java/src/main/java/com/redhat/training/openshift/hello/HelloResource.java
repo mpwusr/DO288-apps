@@ -66,13 +66,34 @@ public class HelloResource {
         return Response.status(200).entity("getUrlUri is called, URL : " + urlURI + "\n").build();
     }
 
-    private void httpsendGet() throws Exception {          
-        private final CloseableHttpClient httpClient = HttpClients.createDefault();
+   public class HttpClientExample {      
+       // one instance, reuse     
+       private final CloseableHttpClient httpClient = HttpClients.createDefault();      
+
+       public static void main(String[] args) throws Exception {          
+         
+          HttpClientExample obj = new HttpClientExample();          
+          try {             
+              System.out.println("Testing 1 - Send Http GET request");             
+              obj.sendGet();              
+              // System.out.println("Testing 2 - Send Http POST request");             
+              // obj.sendPost();         
+          } finally {             
+              obj.close();         
+          }     
+    }
+   
+    private void close() throws IOException {         
+        httpClient.close();     
+    } 
+
+    private void sendGet() throws Exception {          
         HttpGet request = new HttpGet("https://www.google.com/search?q=mkyong");          
         
         // add request headers         
         request.addHeader("custom-key", "mkyong");         
-        request.addHeader(HttpHeaders.USER_AGENT, "Googlebot");          
+        request.addHeader(HttpHeaders.USER_AGENT, "Googlebot");
+          
         try (CloseableHttpResponse response = httpClient.execute(request)) {              
             // Get HttpResponse Status             
             System.out.println(response.getStatusLine().toString());              
@@ -87,8 +108,5 @@ public class HelloResource {
                 System.out.println(result);             
             } 
         }
-        finally {
-          httpClient.close();
-       }
     }
 }
