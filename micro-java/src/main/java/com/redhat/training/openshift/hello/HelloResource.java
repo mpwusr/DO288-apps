@@ -59,7 +59,7 @@ public class HelloResource {
     }
     @GET
     @Path("/geturi/{urlURI}")
-    @Produces("text/plain")
+    @Produces("text/html")
     public Response GetUriService(@PathParam("urlURI") String urlURI) throws Exception {
         System.out.println("TESTING - HTTP GET URI SERVICE");
         HttpClientExample obj = new HttpClientExample();
@@ -70,7 +70,7 @@ public class HelloResource {
         } finally {
            obj.close();
         }
-        return Response.status(200).entity("getUrlUri is called, URL : " + urlURI + msg + "\n").build();
+        return Response.status(200).entity("getUrlUri is called, URL : " + urlURI + "\n" + msg).build();
     }
 
    private static class HttpClientExample {      
@@ -87,7 +87,7 @@ public class HelloResource {
         // add request headers         
         request.addHeader("custom-key", "mkyong");         
         request.addHeader(HttpHeaders.USER_AGENT, "Googlebot");
-          
+        String result = "";  
         try (CloseableHttpResponse response = httpClient.execute(request)) {              
             // Get HttpResponse Status             
             System.out.println(response.getStatusLine().toString());              
@@ -95,7 +95,6 @@ public class HelloResource {
             HttpEntity entity = response.getEntity();             
             Header headers = entity.getContentType();             
             System.out.println(headers);              
-            String result = "";
             if (entity != null) {                 
                 // return it as a String                 
                 result = EntityUtils.toString(entity);                 
