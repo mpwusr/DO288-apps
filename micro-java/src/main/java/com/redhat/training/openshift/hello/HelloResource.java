@@ -78,18 +78,19 @@ public class HelloResource {
         try (CloseableHttpResponse response = httpClient.execute(request)) {              
             // Get HttpResponse Status             
             System.out.println(response.getStatusLine().toString());              
+            
             HttpEntity entity = response.getEntity();             
             Header headers = entity.getContentType();             
             System.out.println(headers);              
         
-        if (entity != null) {                 
-           // return it as a String                 
-           String result = EntityUtils.toString(entity);                 
-           System.out.println(result);             
-        } 
-      }
+            if (entity != null) {                 
+                // return it as a String                 
+                String result = EntityUtils.toString(entity);                 
+                System.out.println(result);             
+            } 
+        }
         finally {
           httpClient.close();
-      }
+       }
     }
 }
