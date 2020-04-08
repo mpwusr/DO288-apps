@@ -69,7 +69,7 @@ public class HelloResource {
     }
 
     private void httpsendGet() throws Exception {          
-        private final CloseableHttClient httpClient = HttpClients.createDefault();
+        private final CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpGet request = new HttpGet("https://www.google.com/search?q=mkyong");          
         
         // add request headers         
