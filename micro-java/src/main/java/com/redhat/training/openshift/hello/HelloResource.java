@@ -66,7 +66,7 @@ public class HelloResource {
         return Response.status(200).entity("getUrlUri is called, URL : " + urlURI + "\n").build();
     }
 
-   public class HttpClientExample {      
+   private static class HttpClientExample {      
        // one instance, reuse     
        private final CloseableHttpClient httpClient = HttpClients.createDefault();      
 
