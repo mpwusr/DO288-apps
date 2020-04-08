@@ -65,7 +65,7 @@ public class HelloResource {
         HttpClientExample obj = new HttpClientExample();
         try {
            System.out.println("Testing 1 - Send Http GET request");
-           obj.sendPost();
+           obj.sendGet();
         } finally {
            obj.close();
         }
