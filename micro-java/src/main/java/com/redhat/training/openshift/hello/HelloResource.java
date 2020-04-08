@@ -83,7 +83,7 @@ public class HelloResource {
           //} finally {             
           //    obj.close();         
           //}     
-    }
+    //}
    
     private void close() throws IOException {         
         httpClient.close();     
